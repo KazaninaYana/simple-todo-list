@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
+import update from 'immutability-helper';
 
 import { TodoList, ActionsType } from '../helpers/types';
-import TodoItem from './TodoItem';
+import Item from './TodoItem';
 import AddTodo from './AddTodo';
 
 
@@ -19,15 +20,46 @@ const TodoApp = () => {
                 { ...item, completed: !item.completed } :
                 item;
         });
+        console.log(changesList);
+        
         setTodoList(changesList);
+      // setTodoList((prevCards: TodoList[]) =>
+      //   //update(prevCards, { id: { $merge: { completed: !prevCards[id].completed } } })
+      //   //update(prevCards, { [id]: { $toggle } });
+      // )
     }
 
     const deleteTodo = (id: string) => {
-        const changesList = todoList.filter(item => item.id !== id);
-        
-        setTodoList(changesList);
-
+        setTodoList(todoList.filter(item => item.id !== id));
     }
+
+    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
+      const chLisct = (prevCards: TodoList[]) =>
+      update(prevCards, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, prevCards[dragIndex] as TodoList],
+        ],
+      });
+      console.log(chLisct);
+      
+      setTodoList(chLisct);
+      }, [])
+
+    const renderCard = useCallback(
+      (todo: TodoList, index: number) => {
+        return (
+          <Item 
+            key={todo.id} 
+            id={todo.id}
+            index={index}
+            item = {todo} 
+            moveCard={moveCard}
+            itemActions={itemActions} />
+        )
+      },
+      [],
+    )
 
     const itemActions = (typeAction: ActionsType, id: string) => {
         switch(typeAction) {
@@ -50,9 +82,9 @@ const TodoApp = () => {
                 setTodoList={setTodoList} />
                 
             <Grid>
-                { todoList.map((todo: TodoList) => 
-                    <TodoItem key={todo.id} item = {todo} itemActions={itemActions} />) 
-                } 
+                    { 
+                      todoList.map((todo, i) => renderCard(todo, i))
+                    } 
             </Grid>
         </>
     )

@@ -7,7 +7,7 @@ type AddProps = {
     setTodoList: Dispatch<SetStateAction<TodoList[]>>
 }
 
-const AddTodo = (props: AddProps) => {
+const AddTodo = ({ todoList, setTodoList }: AddProps) => {
     const [newTodo, setNewTodo] = useState('');
 
     const addTodo = () => {
@@ -16,7 +16,7 @@ const AddTodo = (props: AddProps) => {
             text: newTodo,
             completed: false,
         }
-        props.setTodoList([...props.todoList, generatedNewTodo]);
+        setTodoList([...todoList, generatedNewTodo]);
         setNewTodo('');
     }
 
