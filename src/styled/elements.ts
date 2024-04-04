@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { mainFontColor } from '../helpers/colors';
 
 export const RowItem = styled.div`
@@ -23,7 +23,27 @@ export const Actions = styled.div`
     gap: 0 10px;
 `;
 
+const strikeitem = keyframes`
+	to { width:calc(100% + 1rem); }
+`
 
 export const Name = styled.span`
     transition: opacity .2s linear;
+
+&.done {
+    position: relative;
+    opacity:.6;
+}
+
+&.done:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -.5rem;
+    display: block;
+    width: 0%;
+    height: 1px;
+    background: #FFF;
+    animation: ${strikeitem} .3s ease-out 0s forwards;
+}
 `;

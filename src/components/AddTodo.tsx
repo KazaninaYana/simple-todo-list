@@ -1,30 +1,33 @@
-import { useState, Dispatch, SetStateAction, KeyboardEvent } from 'react';
+import { memo, useState, KeyboardEvent } from 'react';
 import { TodoList } from '../helpers/types';
 import { Form, Input, Button } from '../styled/add-todo';
 
 type AddProps = {
-    todoList: TodoList[];
-    setTodoList: Dispatch<SetStateAction<TodoList[]>>
+    addNewTodo: (newTodo: TodoList) => void;
 }
 
-const AddTodo = (props: AddProps) => {
+const AddTodo = memo(({ addNewTodo }: AddProps) => {
     const [newTodo, setNewTodo] = useState('');
 
-    const addTodo = () => {
-        const generatedNewTodo:TodoList = {
+    const handler = () => {
+        console.log('AddTodo =>');
+        addNewTodo({
             id: crypto.randomUUID(),
             text: newTodo,
             completed: false,
-        }
-        props.setTodoList([...props.todoList, generatedNewTodo]);
+        });
         setNewTodo('');
     }
 
     const keyUpFunction = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(event.key === 'Enter'){
-            addTodo();
-        }
+        console.log('keyUpFunction =>');
+        
+        if (event.key !== 'Enter') return;
+        
+        handler();
     }
+
+    console.log('AddTodo');
 
     return (
         <Form>
@@ -34,9 +37,9 @@ const AddTodo = (props: AddProps) => {
                 onChange={(e) => setNewTodo(e.target.value)}
                 onKeyUp={keyUpFunction}
             />
-            <Button onClick={addTodo}>Add item</Button>
+            <Button onClick={handler}>Add item</Button>
         </Form>
     )
-}
+});
 
 export default AddTodo;

@@ -3,6 +3,8 @@ import Todo  from './components/Todo';
 import { Wrapper, Title, Subtitle } from './styled/common-todo';
 
 function App() {
+  console.log('App');
+  
   return (
     <Wrapper>
         <Title>

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TodoList, ActionsType } from '../helpers/types';
 import { FaCheckSquare, FaRegSquare , FaTrash  }from 'react-icons/fa';
 import { RowItem, Name, Actions } from '../styled/elements';
@@ -7,7 +8,9 @@ type ItemProps = {
     itemActions: (typeAction: ActionsType, id: string) => void,
 }
 
-const TodoItem = ({ item, itemActions }: ItemProps) => {
+const TodoItem = memo(({ item, itemActions }: ItemProps) => {
+    console.log('TodoItem');
+
     return (
         <RowItem>
             <Name>{ item.text }</Name>
@@ -25,6 +28,6 @@ const TodoItem = ({ item, itemActions }: ItemProps) => {
             </Actions>
         </RowItem>
     )
-}
+});
 
 export default TodoItem;

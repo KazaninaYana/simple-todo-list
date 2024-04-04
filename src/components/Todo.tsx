@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 import { TodoList, ActionsType } from '../helpers/types';
@@ -13,45 +13,33 @@ export const Grid = styled.div`
 const TodoApp = () => {
     const [todoList, setTodoList] = useState<TodoList[]>([]);
 
-    const toggleChecked = (id: string) => {
-        const changesList = todoList.map(item => {
-            return (item.id === id) ?
-                { ...item, completed: !item.completed } :
-                item;
-        });
-        setTodoList(changesList);
-    }
+    const addNewTodo = useCallback((newTodo: TodoList) => setTodoList(todo => [...todo, newTodo]), []);
 
-    const deleteTodo = (id: string) => {
-        const changesList = todoList.filter(item => item.id !== id);
-        
-        setTodoList(changesList);
-
-    }
-
-    const itemActions = (typeAction: ActionsType, id: string) => {
+    const itemActions = useCallback((typeAction: ActionsType, id: string) => {
         switch(typeAction) {
             case 'toggle': 
-                toggleChecked(id);
+                setTodoList(
+                    todoList.map(item => item.id !== id ? item : {...item, completed: !item.completed})
+                );
                 break;
             case 'delete': 
-                deleteTodo(id);
+                setTodoList(todoList.filter(item => item.id !== id));
                 break;
 
             default:
                 alert( 'Нет таких значений' );
         }
-    }
+    }, [setTodoList])
+    console.log('TodoApp');
 
     return(
         <>
-            <AddTodo 
-                todoList={todoList}
-                setTodoList={setTodoList} />
+            <AddTodo addNewTodo={addNewTodo}/>
                 
             <Grid>
-                { todoList.map((todo: TodoList) => 
-                    <TodoItem key={todo.id} item = {todo} itemActions={itemActions} />) 
+                { 
+                    todoList.map((todo: TodoList) => 
+                        <TodoItem key={todo.id} item = {todo} itemActions={itemActions} />) 
                 } 
             </Grid>
         </>
