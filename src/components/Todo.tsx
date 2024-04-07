@@ -13,24 +13,25 @@ export const Grid = styled.div`
 const TodoApp = () => {
     const [todoList, setTodoList] = useState<TodoList[]>([]);
 
-    const addNewTodo = useCallback((newTodo: TodoList) => setTodoList(todo => [...todo, newTodo]), []);
+    const addNewTodo = useCallback((newTodo: TodoList) => 
+        setTodoList(todos => [...todos, newTodo]
+    ), []);
 
     const itemActions = useCallback((typeAction: ActionsType, id: string) => {
         switch(typeAction) {
             case 'toggle': 
-                setTodoList(
-                    todoList.map(item => item.id !== id ? item : {...item, completed: !item.completed})
+                setTodoList(todos => 
+                    todos.map(item => item.id !== id ? item : {...item, completed: !item.completed})
                 );
                 break;
             case 'delete': 
-                setTodoList(todoList.filter(item => item.id !== id));
+                setTodoList(todos => todos.filter(item => item.id !== id));
                 break;
 
             default:
                 alert( 'Нет таких значений' );
         }
-    }, [setTodoList])
-    console.log('TodoApp');
+    }, [])
 
     return(
         <>
@@ -39,7 +40,7 @@ const TodoApp = () => {
             <Grid>
                 { 
                     todoList.map((todo: TodoList) => 
-                        <TodoItem key={todo.id} item = {todo} itemActions={itemActions} />) 
+                        <TodoItem key={todo.id} item={todo} itemActions={itemActions} />) 
                 } 
             </Grid>
         </>

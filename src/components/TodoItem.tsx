@@ -9,8 +9,6 @@ type ItemProps = {
 }
 
 const TodoItem = memo(({ item, itemActions }: ItemProps) => {
-    console.log('TodoItem');
-
     return (
         <RowItem>
             <Name>{ item.text }</Name>
