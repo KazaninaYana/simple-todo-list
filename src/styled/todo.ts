@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { backgroundColor, mainFontColor } from '../helpers/colors';
 
 export const Wrapper = styled.div`
-    max-width: 500px;
+    max-width: 600px;
     padding: 2rem 3rem 3rem;
     margin: auto;
     background: ${ backgroundColor };

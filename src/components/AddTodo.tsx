@@ -1,6 +1,6 @@
 import { memo, useState, KeyboardEvent } from 'react';
 import { TodoList } from '../helpers/types';
-import { Form, Input, Button } from '../styled/add-todo';
+import { Form, Input, Button } from '../styled/common';
 
 import ModalError  from './ModalError';
 

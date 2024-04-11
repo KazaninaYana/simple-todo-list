@@ -5,4 +5,4 @@ export interface TodoList {
     completed: boolean;
 }
 
-export type ActionsType = 'delete' | 'toggle';
+export type ActionsType = 'delete' | 'toggle' | 'edit';

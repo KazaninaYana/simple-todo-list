@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 import { TodoList, ActionsType } from '../helpers/types';
-import TodoItem from './TodoItem';
+import Item from './Item';
 import AddTodo from './AddTodo';
 
 
@@ -17,7 +17,7 @@ const TodoApp = () => {
         setTodoList(todos => [...todos, newTodo]
     ), []);
 
-    const itemActions = useCallback((typeAction: ActionsType, id: string) => {
+    const itemActions = useCallback((typeAction: ActionsType, id: string, value?: string) => {
         switch(typeAction) {
             case 'toggle': 
                 setTodoList(todos => 
@@ -26,6 +26,11 @@ const TodoApp = () => {
                 break;
             case 'delete': 
                 setTodoList(todos => todos.filter(item => item.id !== id));
+                break;
+            case 'edit': 
+                setTodoList(todos => 
+                    todos.map(item => item.id !== id ? item : {...item, text: value || ''})
+                );
                 break;
 
             default:
@@ -40,7 +45,7 @@ const TodoApp = () => {
             <Grid>
                 { 
                     todoList.map((todo: TodoList) => 
-                        <TodoItem key={todo.id} item={todo} itemActions={itemActions} />) 
+                        <Item key={todo.id} item={todo} itemActions={itemActions} />) 
                 } 
             </Grid>
         </>
