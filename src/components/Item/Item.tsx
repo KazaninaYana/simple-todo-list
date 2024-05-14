@@ -38,7 +38,10 @@ const TodoItem = memo(({ item, itemActions }: ItemProps) => {
                 onClick={() => itemActions('toggle', item.id)} />
             <FaTrash size={24} onClick={() => itemActions('delete', item.id)} /> 
         </>
-      }, [isEditing, item.completed])
+      }, [isEditing, item.completed]);
+
+      console.log(item);
+      
 
     return (
         <RowItem>

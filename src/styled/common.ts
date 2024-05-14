@@ -7,6 +7,7 @@ const formElement = css`
 `
 
 export const Form = styled.div`
+    position: relative;
     margin-top: 1.5rem;
     display: flex;
 `;
@@ -41,17 +42,51 @@ export const Button = styled.button`
     }
 `;
 
+export const ToogleButton = styled.span`
+    position: relative;
+    display: block;
+    margin-left: 0.6em;
+    width: 38px;
+    height: 22px;
+    background: white;
+    border-radius: 999px;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        display: block;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #FF6666;
+        opacity: 0.7;
+        transition: all .2s ease-in-out;
+    }
+    &.checked:before {
+        left: calc(100% - 4px - 16px);
+        opacity: 1;
+    }
+`;
 
 export const FlexContainer = styled.div<
 {
     $alignBlock?: 'right' | 'center' | 'left', 
     $gap?: string,
-    $direction?: 'row' | 'column'
+    $direction?: 'row' | 'column',
+    $marginTop?: string,
 }>`
     display: flex;
-    justify-content: ${({ $alignBlock }) => ($alignBlock === 'right' ? 'flex-end' : $alignBlock === 'left' ? 'flex-start' : 'center' )};
-    padding-top: ${({ $gap }) => $gap}px;
-    padding-bottom: ${({ $gap }) => $gap}px;
     flex-direction: ${({ $direction }) => $direction};
+    justify-content: ${({ $alignBlock }) => ($alignBlock === 'right' ? 'flex-end' : $alignBlock === 'left' ? 'flex-start' : 'center' )};
+    padding-top: ${({ $gap }) => $gap};
+    padding-bottom: ${({ $gap }) => $gap};
+    margin-top: ${({ $marginTop }) => $marginTop ? $marginTop : 0};
     text-align: ${({ $alignBlock }) => $alignBlock};
 `
+
+export const EmojiPickerWrapper = styled.div`
+    position: absolute;
+`;

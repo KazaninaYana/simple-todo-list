@@ -17,7 +17,7 @@ const ModalError = ({textError, closeModal}: {textError?: string, closeModal: ()
                     </FlexContainer>
                 </ErrorIcon>
 
-                <FlexContainer $alignBlock="center" $gap="20" $direction="column">
+                <FlexContainer $alignBlock="center" $gap="20px" $direction="column">
                     <Title>Error</Title>
                     <p>{ textError }</p>
                 </FlexContainer>
